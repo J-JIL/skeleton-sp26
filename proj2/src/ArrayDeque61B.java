@@ -1,4 +1,6 @@
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ArrayDeque61B<T> implements Deque61B<T>{
@@ -188,5 +190,57 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
     @Override
     public T getRecursive(int index) {
         return null;
+    }
+
+    @Override
+    public Iterator<T> iterator(){
+        return new aIterator();
+    }
+
+    private class aIterator implements Iterator<T>{
+        private int pos;
+        private final int start;
+
+        public aIterator(){
+            pos = nextFirst;
+            start = nextFirst;
+        }
+
+        @Override
+        public boolean hasNext(){
+            return (pos + 1) % capacity != start && items[(pos + 1) % capacity] != null;
+        }
+
+        @Override
+        public T next(){
+            if(hasNext()){
+                pos = (pos+1)%capacity;
+                return items[pos];
+            }
+            return null;
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o){
+            return true;
+        } else if (o == null) {
+            return false;
+        } else if(!(o instanceof Deque61B<?>)){
+            return false;
+        }
+        Deque61B<?> other = (Deque61B<?>) o ;
+        if(other.size()!=size){
+            return false;
+        }else{
+            for(int i = 0; i < size; i ++){
+                if(other.get(i) != this.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

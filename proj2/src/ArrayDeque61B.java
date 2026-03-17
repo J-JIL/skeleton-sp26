@@ -243,4 +243,23 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
             return true;
         }
     }
+
+    @Override
+    public String toString(){
+        StringBuilder p = new StringBuilder("[");
+        if(size == 0){
+            return "[]";
+        }else{
+            int cur = (nextFirst+1)%capacity;
+            for(int i = 0;i< size; i++){
+                if(i!= 0){
+                    p.append(",");
+                }
+                p.append(items[cur]);
+                cur = (cur+1)%capacity;
+            }
+            p.append("]");
+        }
+        return p.toString();
+    }
 }
